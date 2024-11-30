@@ -1,7 +1,7 @@
-import logo from "../assets/logo.png"
 
-export const topo = {
-    imagem: logo,
+const topo = {
     boasVindas: "Olá Giuseppe",
     legenda: "Encontre os melhores produtores"
 }
+
+export default topo
