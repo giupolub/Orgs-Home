@@ -1,14 +1,41 @@
-import { Text, Image, View, StyleSheet } from "react-native"
+import { Text, Image, View, StyleSheet, TouchableOpacity } from "react-native"
+import Estrelas from "../../../componentes/Estrelas"
+import { useMemo, useReducer, useState } from "react"
 
+const distanciaEmMetros = (distancia) => {
+    return `${distancia} m`
+}
 
 export default function Produtor({ nome, imagem, estrelas, distancia }) {
-    return <View style={estilos.cartao}>
+
+    // const [selecionado, setSelecionado] = useState(false)
+    const [selecionado, inverterSelecionado] = useReducer(
+        (selecionado) => !selecionado,
+        false
+    )
+
+    const distanciaTexto = useMemo(
+        () => distanciaEmMetros(distancia),
+        [distancia]
+    )
+
+    return <TouchableOpacity
+        style={estilos.cartao}
+        onPress={inverterSelecionado}
+    >
         <Image source={imagem} style={estilos.imagem} />
         <View style={estilos.informacoes}>
-            <Text style={estilos.nome}>{nome}</Text>
-            <Text style={estilos.distancia}>{distancia}</Text>
+            <View>
+                <Text style={estilos.nome}>{nome}</Text>
+                <Estrelas
+                    quantidade={estrelas}
+                    editavel={selecionado}
+                    grande={selecionado}
+                />
+            </View>
+            <Text style={estilos.distancia}>{distanciaTexto}</Text>
         </View>
-    </View>
+    </TouchableOpacity>
 }
 
 const estilos = StyleSheet.create({
@@ -44,7 +71,7 @@ const estilos = StyleSheet.create({
         justifyContent: 'space-between',
         marginLeft: 8,
         marginVertical: 16,
-        marginRight: 16,
+        marginRight: 16
     },
     nome: {
         fontSize: 14,
@@ -53,6 +80,6 @@ const estilos = StyleSheet.create({
     },
     distancia: {
         fontSize: 12,
-        lineHeight: 19,
-    },
+        lineHeight: 19
+    }
 })
