@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react"
+import { FlatList, Image, StyleSheet, Text, View } from "react-native"
+
 import { carregaProdutores } from "../../../servicos/carregaDados"
-import { FlatList, Image, Text, View } from "react-native"
+import Produtor from "./Produtor"
+
+import estrela from "../../../assets/estrela.png"
+import estrelaCinza from "../../../assets/estrelaCinza.png"
 
 export default function produtores() {
     const [titulo, setTitulo] = useState("")
@@ -13,9 +18,19 @@ export default function produtores() {
     }, [])
 
     return <FlatList
-    data={lista}
-    renderItem={({item: {nome}}) => <Text>{nome}</Text>}
-    keyExtractor={({nome}) => nome}
+        data={lista}
+        renderItem={({item}) => <Produtor{...item} />}
+        keyExtractor={({ nome }) => nome}
 
     />
 }
+
+const estilos = StyleSheet.create({
+    produtor: {
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+    informacoes: {
+        justifyContent: "space-between"
+    }
+})
